@@ -59,9 +59,10 @@
               :auto-upload="false"
               :file-list="fileList"
             >
+              
               <i slot="default" class="el-icon-plus"></i>
               <div slot="file" slot-scope="{ file }">
-                <img class="el-upload-list__item-thumbnail" :src="file.url || formData.qrcode" alt />
+                <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
                 <span class="el-upload-list__item-actions">
                   <span
                     class="el-upload-list__item-preview"
@@ -164,7 +165,7 @@ export default {
       fileList: [],
       dialogImageUrl: "",
       dialogVisible: false,
-      disabled: false
+      disabled: false,
     };
   },
   watch: {
@@ -172,26 +173,40 @@ export default {
       console.log(this.dialogImageUrl);
     },
   },
+  mounted() {
+    if(!this.type){
+      return;
+    }
+    //获取当前活动的群二维码的临时路径 
+    app.getTempFileURL({
+      fileList: [this.formData.qrcode]
+    }).then(res=>{
+      this.fileList = [{name:res.fileList[0].fileID,url:res.fileList[0].tempFileURL}];
+    })
+  },
   methods: {
     // 选择文件
     qrcodeUrlChange(file, fileList) {
       console.log(file, fileList);
       this.fileList.push(file);
+      this.formData.qrcodeUrl = file.url;
       app
         .uploadFile({
-          cloudPath: `社团/activity/${this.formData.title}-${file.name}-${new Date().getTime()}`,
+          cloudPath: `社团/activity/${this.formData.title}-${new Date().getTime()}-${file.name}`,
           filePath: file.raw
         })
         .then(result => {
           // 上传结果
           this.formData.qrcode = result.fileID;
+          
+          console.log(this.formData)
+          // console.log(resfileID)
           this.$message({
             message: "图片上传成功",
             type: "success",
             showClose: true,
             duration: 3000
           });
-          
           console.log(result);
         }).catch(()=>{
           this.$message({
@@ -205,7 +220,6 @@ export default {
     // 删除已选中的图片
     handleRemove(file) {
       console.log(file);
-      console.log(this.fileList)
       this.fileList = this.fileList.filter(item => file !== item);
       this.formData.qrcode = '';
     },
