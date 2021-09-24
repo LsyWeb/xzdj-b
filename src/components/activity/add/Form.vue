@@ -2,12 +2,14 @@
   <div class="form-container">
     <el-form
       :rules="rules"
-      class="form"
       :model="formData"
-      ref="form"
-      label-width="100px"
+      status-icon
       :inline="false"
+      ref="form"
+      class="form"
+      label-width="100px"
       size="normal"
+      
     >
       <div class="wrap">
         <div>
@@ -102,6 +104,15 @@ export default {
     type:String
   },
   data() {
+    const validateTeamNum = (rule, value, callback)=>{
+      if(this.formData.regType == 'team'){
+        if(!value){
+          callback(new Error('报名方式为团队时，队伍人数必填'));
+        }else{
+          callback();
+        }
+      }
+    }
     return {
       formItems: [
         { label: "标题", prop: "title" },
@@ -113,14 +124,26 @@ export default {
         { label: "比赛群号", prop: "qunNum" },
         { label: "群二维码", prop: "qrcode" }
       ],
+      rulesFrom:{
+        
+      },
       rules: {
         title: { required: true, message: "请输入标题", trigger: "blur" },
         desc: { required: true, message: "描述不能为空", trigger: "blur" },
-        total: { required: true, message: "请输入总人数", trigger: "blur" },
+        total: [
+          { required: true, message: "请输入总人数", trigger: "blur" },
+          { type: 'number',  message: "必须填写数字", trigger: "change" },
+        ],
         regType: { required: true, message: "请选择报名方式", trigger: "blur" },
+        teamNum: [
+          { validator: validateTeamNum, trigger: 'blur' },
+          { type: 'number',  message: "必须填写数字", trigger: "change" },
+        ],
         date: { required: true, message: "请选择日期", trigger: "blur" },
         faculty: { required: true, message: "请选择院系", trigger: "blur" },
-        qunNum: { required: true, message: "请输入比赛群号", trigger: "blur" },
+        qunNum: [
+          { required: true, message: "请输入比赛群号", trigger: "blur" },
+        ],
         qrcode: {
           required: true,
           message: "请上传比赛群的二维码",

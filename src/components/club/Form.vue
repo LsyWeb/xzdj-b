@@ -16,7 +16,7 @@
         <el-input v-model="form.class" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="手机号" prop="mobile">
-        <el-input v-model="form.mobile"></el-input>
+        <el-input v-model.number="form.mobile"></el-input>
       </el-form-item>
       
       <el-form-item  label="年级" prop="grade" size="normal">
@@ -58,7 +58,8 @@ export default {
   },
   data() {
     var validateMobile = (rule, value, callback) => {
-        if (value.length !== 11) {
+      console.log(value + '')
+        if ((value + '').length !== 11) {
           callback(new Error('手机号格式不正确'));
         }else{
           callback();
@@ -70,8 +71,10 @@ export default {
         grade: { required: true, message: "请选择年级", trigger: "change" },
         faculty: { required: true, message: "请选择院系", trigger: "change" },
         class: { required: true, message: "请输入班级", trigger: "blur" },
-        mobile: [{ required: true, message: "请输入手机号", trigger: "blur" },
-                {validator:validateMobile,trigger:"blur"}
+        mobile: [
+          { required: true, message: "请输入手机号", trigger: "blur" },
+          { validator:validateMobile,trigger:"blur"},
+          { type: 'number',  message: "必须填写数字", trigger: "change" },
         ],
       },
       gradeOptions:['21级','20级','19级'],

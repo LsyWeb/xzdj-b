@@ -58,7 +58,9 @@ export default {
         teamNumber2: { required: true, message: "请输入人员信息", trigger: "blur" },
         teamNumber3: { required: true, message: "请输入人员信息", trigger: "blur" },
         teamNumber4: { required: true, message: "请输入人员信息", trigger: "blur" },
-        qq: { required: true, message: "请输入qq", trigger: "blur" },
+        qq: [
+          { required: true, message: "请输入qq", trigger: "blur" },
+        ]
       },
     };
   },

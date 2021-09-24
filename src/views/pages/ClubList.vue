@@ -229,6 +229,7 @@ export default {
           const result = res.data[0].data;
           console.log(result)
           const _totalData = result.map(item =>{
+            item.mobile =parseInt(item.mobile)
             item.grade = item.fac[0];
             item.faculty = item.fac[1];
             return item;

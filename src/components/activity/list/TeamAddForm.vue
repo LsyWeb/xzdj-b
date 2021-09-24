@@ -12,7 +12,6 @@
       <el-form-item v-for="item in formList" :key="item.name" :label="item.label" :prop="item.name">
         <el-input v-model="form[item.name]" autocomplete="off"></el-input>
       </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="submitForm"
           >提交</el-button
@@ -61,7 +60,9 @@ export default {
         teamNumber2: { required: true, message: "请输入人员信息", trigger: "blur" },
         teamNumber3: { required: true, message: "请输入人员信息", trigger: "blur" },
         teamNumber4: { required: true, message: "请输入人员信息", trigger: "blur" },
-        qq: { required: true, message: "请输入qq", trigger: "blur" },
+        qq: [
+          { required: true, message: "请输入qq", trigger: "blur" },
+        ],
       },
     };
   },

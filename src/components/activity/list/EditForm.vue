@@ -31,7 +31,7 @@
         </el-select>
       </el-form-item>
       <el-form-item  label="院系" prop="faculty" size="normal">
-        <el-select v-model="form.faculty" placeholder="请选择院系" > 
+        <el-select v-model.number="form.faculty" placeholder="请选择院系" > 
           <el-option
             v-for="item in facultyOptions"
             :key="item"
@@ -58,21 +58,14 @@ export default {
     facultyOptions:Array
   },
   data() {
-    var validateMobile = (rule, value, callback) => {
-        if (value.length !== 10) {
-          callback(new Error('手机号格式不正确'));
-        }else{
-          callback();
-        }
-      };
     return {
       rules: {
         name: { required: true, message: "请输入姓名", trigger: "blur" },
         grade: { required: true, message: "请选择年级", trigger: "change" },
         faculty: { required: true, message: "请选择院系", trigger: "change" },
         class: { required: true, message: "请输入班级", trigger: "blur" },
-        qq: [{ required: true, message: "请输入qq", trigger: "blur" },
-                {validator:validateMobile,trigger:"blur"}
+        qq: [
+          { required: true, message: "请输入qq", trigger: "blur" },
         ],
       },
       gradeOptions:['21级','20级','19级'],

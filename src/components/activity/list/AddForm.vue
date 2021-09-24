@@ -64,7 +64,9 @@ export default {
         grade: { required: true, message: "请选择年级", trigger: "change" },
         faculty: { required: true, message: "请选择院系", trigger: "change" },
         class: { required: true, message: "请输入班级", trigger: "blur" },
-        qq: [{ required: true, message: "请输入手机号", trigger: "blur" },],
+        qq: [
+          { required: true, message: "请输入手机号", trigger: "blur" },
+        ],
       },
       gradeOptions:['21级','20级','19级'],
     };

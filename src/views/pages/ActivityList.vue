@@ -9,8 +9,27 @@
               v-if="nowTime > item.startTime && nowTime < item.endTime"
               :key="'now' + item.id"
             >
-              <div slot="header" class="clearfix">
+              <div slot="header" class="clearfix" style="display:flex;justify-content:space-between;">
                 <span class="title">{{ item.title }}</span>
+                <div dispa>
+                  <el-button
+                  style="margin-top:10px;padding:0px;"
+                  type="text"
+                  :data-id="item.id"
+                  :data-index="i"
+                  @click="showDrawerChange"
+                  >{{item.regType === 'team'? '查看报名队伍' : '查看报名人员'}}</el-button
+                >
+                <el-button
+                  style="margin:10px 0 0 20px;padding:0px;color:rgb(0, 200, 0);"
+                  :data-id="item.id"
+                  :data-index="i"
+                  type="text"
+                  size="default"
+                  @click="activityEdit"
+                  >编辑</el-button
+                >
+                
                 <el-button
                   style="float: right; margin:10px 0 0 20px;padding:0px;color:#f00"
                   :data-id="item.id"
@@ -20,23 +39,8 @@
                   @click="activityDelete"
                   >删除</el-button
                 >
-                <el-button
-                  style="float: right; margin:10px 0 0 20px;padding:0px;color:green"
-                  :data-id="item.id"
-                  :data-index="i"
-                  type="text"
-                  size="default"
-                  @click="activityEdit"
-                  >编辑</el-button
-                >
-                <el-button
-                  style="float: right;margin-top:10px;padding:0px;"
-                  type="text"
-                  :data-id="item.id"
-                  :data-index="i"
-                  @click="showDrawerChange"
-                  >{{item.regType === 'team'? '查看报名队伍' : '查看报名人员'}}</el-button
-                >
+                </div>
+                
               </div>
               <div class="text item">
                 <div>{{ item.desc }}</div>
@@ -65,10 +69,19 @@
               v-if="nowTime > item.endTime"
               :key="'end' + item.id"
             >
-              <div slot="header" class="clearfix">
+              <div slot="header" class="clearfix" style="display:flex;justify-content:space-between;">
                 <span class="title">{{ item.title }}</span>
+                <div>
+                  <el-button
+                  style="padding: 3px 0"
+                  type="text"
+                  @click="showDrawerChange"
+                  :data-id="item.id"
+                  :data-index="i"
+                  >{{item.regType === 'team'? '查看报名队伍' : '查看报名人员'}}</el-button
+                >
                 <el-button
-                  style="float: right; padding: 3px 0 3px 20px;color:#f00"
+                  style="padding: 3px 0 3px 20px;color:#f00"
                   :data-id="item.id"
                   :data-index="i"
                   type="text"
@@ -76,14 +89,7 @@
                   @click="activityDelete"
                   >删除</el-button
                 >
-                <el-button
-                  style="float: right; padding: 3px 0"
-                  type="text"
-                  @click="showDrawerChange"
-                  :data-id="item.id"
-                  :data-index="i"
-                  >{{item.regType === 'team'? '查看报名队伍' : '查看报名人员'}}</el-button
-                >
+                </div>
               </div>
               <div class="text item">
                 <div>{{ item.desc }}</div>
@@ -475,18 +481,18 @@ export default {
               (item) => item.id == this.id
             );
             console.log(tableResult);
-             //获取本活动可以参加的院系
+             
             if(this.type === 'team'){
               this.detailList = tableResult[0].teamList;
               this.teamNum = tableResult[0].teamNum;
             }
-            else{
+            else{//获取本活动可以参加的院系
               this.FacultyOptions = tableResult[0].faculty;
               this.detailList = tableResult[0].regList.map((item) => {
                 return { ...item, grade: item.fac[0], faculty: item.fac[1] };
               });
             }
-            return;
+
           }
           console.log(res.data[0].list);
           const result = res.data[0].list.map((item) => {
@@ -529,7 +535,7 @@ export default {
     }
   }
   .box-card {
-    width: 400px;
+    width: 450px;
     margin: 10px 20px;
     box-sizing: border-box;
     .title {
