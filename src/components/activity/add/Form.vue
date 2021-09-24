@@ -176,9 +176,10 @@ export default {
     // 选择文件
     qrcodeUrlChange(file, fileList) {
       console.log(file, fileList);
+      this.fileList.push(file);
       app
         .uploadFile({
-          cloudPath: `社团/activity/${this.formData.title}-${file.name}`,
+          cloudPath: `社团/activity/${this.formData.title}-${file.name}-${new Date().getTime()}`,
           filePath: file.raw
         })
         .then(result => {
@@ -192,12 +193,20 @@ export default {
           });
           
           console.log(result);
-        });
+        }).catch(()=>{
+          this.$message({
+            message: "图片上传失败",
+            type: "success",
+            showClose: true,
+            duration: 3000
+          });
+        })
     },
     // 删除已选中的图片
     handleRemove(file) {
       console.log(file);
-      this.fileList = this.fileList.filter(item => file == item);
+      console.log(this.fileList)
+      this.fileList = this.fileList.filter(item => file !== item);
       this.formData.qrcode = '';
     },
     // 预览上传的图片
