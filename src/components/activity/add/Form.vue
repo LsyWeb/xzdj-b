@@ -61,7 +61,7 @@
             >
               <i slot="default" class="el-icon-plus"></i>
               <div slot="file" slot-scope="{ file }">
-                <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
+                <img class="el-upload-list__item-thumbnail" :src="file.url || formData.qrcode" alt />
                 <span class="el-upload-list__item-actions">
                   <span
                     class="el-upload-list__item-preview"
@@ -124,9 +124,6 @@ export default {
         { label: "比赛群号", prop: "qunNum" },
         { label: "群二维码", prop: "qrcode" }
       ],
-      rulesFrom:{
-        
-      },
       rules: {
         title: { required: true, message: "请输入标题", trigger: "blur" },
         desc: { required: true, message: "描述不能为空", trigger: "blur" },
@@ -186,13 +183,14 @@ export default {
         })
         .then(result => {
           // 上传结果
+          this.formData.qrcode = result.fileID;
           this.$message({
             message: "图片上传成功",
             type: "success",
             showClose: true,
             duration: 3000
           });
-          this.formData.qrcode = result.fileID;
+          
           console.log(result);
         });
     },
@@ -200,6 +198,7 @@ export default {
     handleRemove(file) {
       console.log(file);
       this.fileList = this.fileList.filter(item => file == item);
+      this.formData.qrcode = '';
     },
     // 预览上传的图片
     handlePictureCardPreview(file) {
