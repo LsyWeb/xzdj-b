@@ -202,7 +202,7 @@
         direction="rtl"
         size="30%"
       >
-        <h3 slot="title">新增参赛人员</h3>
+        <h3 slot="title">新增参赛队伍</h3>
         <TeamAddForm
           key="team"
           :form="addFormData"
@@ -285,7 +285,17 @@ export default {
           [`list.${this.index}.${target}`]: _.push(form),
         })
         .then((res) => {
-          this.getDatabase();
+          // 新增表单清空
+          this.addFormData = {
+            name: "",
+            qq: "",
+            grade: "",
+            faculty: "",
+            fac: [],
+            id: "",
+          },
+          this.getDatabase();//获取最新数据
+          
           this.$message({
             message: "新增成功",
             type: "success",

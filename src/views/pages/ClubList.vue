@@ -192,6 +192,12 @@ export default {
         return item;
       });
       this.updateDatabase();
+      this.$message({
+            message: '修改成功',
+            type: 'success',
+            showClose: true,
+            duration: 3000,
+      });
     },
     // 编辑按钮
     handleEdit(index, row) {

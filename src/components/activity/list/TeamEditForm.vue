@@ -69,7 +69,7 @@ export default {
       this.$refs.form.validate((valid,error) =>{
         console.log(valid,error)
         if(valid){
-          this.form.id = this.form.acptain + this.form.qq;
+          this.form.id = this.form.captain + this.form.qq;
           console.log(this.form)
           this.$emit('formSubmit',this.form)
         }else{

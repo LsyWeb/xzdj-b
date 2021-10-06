@@ -27,7 +27,7 @@
       </div>
       <div class="right">
         <el-button type="primary" size="small" @click="detailAdd"
-          >新增人员</el-button
+          >新增队伍</el-button
         >
       </div>
     </div>
